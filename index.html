@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成AI活用研修 | 企業向け研修サービス</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #FFFFFF;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #004B8D 0%, #0066CC 50%, #4A90E2 100%);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            min-height: 60px;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: white;
+        }
+        
+
+        
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 10px 0;
+                min-height: 50px;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #004B8D;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                gap: 16px;
+                z-index: 1001;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .hero {
+                margin-top: 50px;
+                padding: 60px 0 40px;
+                min-height: calc(70vh - 50px);
+            }
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: 
+                linear-gradient(135deg, rgba(0, 75, 141, 0.8) 0%, rgba(0, 102, 204, 0.8) 50%, rgba(74, 144, 226, 0.8) 100%),
+                url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&h=1080') center/cover no-repeat;
+            color: white;
+            padding: 100px 0 60px;
+            text-align: center;
+            overflow: hidden;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            margin-top: 60px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(245, 166, 35, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(74, 144, 226, 0.1) 0%, transparent 50%);
+            animation: floatingOrbs 20s ease-in-out infinite;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: patternMove 30s linear infinite;
+        }
+        
+
+        
+        @keyframes floatingOrbs {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 1;
+            }
+            33% {
+                transform: translateY(-20px) rotate(120deg);
+                opacity: 0.8;
+            }
+            66% {
+                transform: translateY(10px) rotate(240deg);
+                opacity: 0.9;
+            }
+        }
+        
+        @keyframes patternMove {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            100% {
+                transform: translateX(60px) translateY(60px);
+            }
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #F5A623;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #e6951f;
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 64px 0;
+        }
+        
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 48px;
+            color: #004B8D;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #004B8D, #F5A623);
+            border-radius: 2px;
+        }
+        
+        .section-title.alt {
+            background: linear-gradient(135deg, #004B8D, #0066CC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title.highlight {
+            background: linear-gradient(135deg, #F5A623, #e6951f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Problems Section */
+        .problems {
+            background-color: #f8f9fa;
+        }
+        
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .problem-card {
+            background: white;
+            padding: 32px 24px;
+            border-radius: 4px;
+            border: 1px solid #E5E5E5;
+            flex: 0 1 350px;
+        }
+        
+        .problem-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #f0f4f8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        
+        .problem-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #004B8D;
+        }
+        
+        .problem-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Features Section */
+        .features-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 48px;
+            justify-content: center;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 32px 24px;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            flex: 0 1 350px;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 24px;
+            background-color: #004B8D;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #004B8D;
+        }
+        
+        /* Curriculum Section */
+        .curriculum-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin-top: 48px;
+            justify-content: center;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+            flex: 0 1 250px;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: #004B8D;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 auto 24px;
+        }
+        
+        .step h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #004B8D;
+            letter-spacing: -0.01em;
+        }
+        
+        /* Video Section */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 45%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 75, 141, 0.15);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+        
+        .video-description {
+            text-align: center;
+            margin-top: 24px;
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        /* Results Section */
+        .results {
+            background-color: #f8f9fa;
+        }
+        
+        .results-slider {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin-top: 48px;
+            justify-content: center;
+        }
+        
+        .result-card {
+            background: white;
+            padding: 32px;
+            border-radius: 4px;
+            border: 1px solid #E5E5E5;
+            flex: 0 1 350px;
+        }
+        
+        .result-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #004B8D;
+        }
+        
+        /* Pricing Section */
+        .pricing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin-top: 48px;
+            justify-content: center;
+        }
+        
+        .pricing-card {
+            border: 2px solid #004B8D;
+            border-radius: 8px;
+            padding: 48px 32px;
+            text-align: center;
+            flex: 0 1 400px;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .discount-badge {
+            background-color: #F5A623;
+            color: white;
+            padding: 12px 20px;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(245, 166, 35, 0.3);
+            border: 3px solid white;
+            animation: pulse 2s infinite;
+            display: inline-block;
+            margin-top: 16px;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 8px rgba(245, 166, 35, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 12px rgba(245, 166, 35, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 8px rgba(245, 166, 35, 0.3);
+            }
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #004B8D;
+        }
+        
+        .pricing-card .price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #F5A623;
+        }
+        
+        .pricing-card .price.regular {
+            color: #333;
+        }
+        
+        .pricing-card p {
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+        
+        .pricing-cta {
+            text-align: center;
+            margin-top: 48px;
+        }
+        
+        /* Benefits Section */
+        .benefits-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin-top: 48px;
+            justify-content: center;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 32px 24px;
+            border-radius: 8px;
+            border: 2px solid #004B8D;
+            flex: 0 1 350px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 75, 141, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 75, 141, 0.2);
+        }
+        
+        .benefit-icon {
+            width: 56px;
+            height: 56px;
+            background-color: #f0f4f8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 2px solid #004B8D;
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #004B8D;
+        }
+        
+        .benefit-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .benefit-card p strong {
+            color: #F5A623;
+            font-weight: 700;
+        }
+
+        /* FAQ Section */
+        .faq-item {
+            border-bottom: 1px solid #E5E5E5;
+            margin-bottom: 16px;
+        }
+        
+        .faq-question {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            padding: 20px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: #004B8D;
+        }
+        
+        .faq-answer {
+            padding: 0 0 20px 0;
+            display: none;
+            color: #666;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #004B8D 0%, #0066CC 50%, #4A90E2 100%);
+            color: white;
+            padding: 48px 0 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            color: white;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .footer-cta {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-cta .cta-button {
+            background-color: #F5A623;
+            font-size: 0.9rem;
+            padding: 12px 24px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            
+            .hero p {
+                font-size: 1.25rem;
+            }
+            
+            .section-title {
+                font-size: 2.25rem;
+            }
+            
+            .features-grid,
+            .curriculum-steps,
+            .results-slider {
+                grid-template-columns: 1fr;
+            }
+            
+            .problems-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">llabo_AI研修</div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="#problems">課題</a></li>
+                        <li><a href="#features">研修の特徴</a></li>
+                        <li><a href="#curriculum">カリキュラム</a></li>
+                        <li><a href="#video">研修内容動画</a></li>
+                        <li><a href="#results">成果事例</a></li>
+                        <li><a href="#pricing">料金</a></li>
+                        <li><a href="#benefits">特典</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+
+                    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        
+        <div class="container">
+            <h1>たった10時間で生成AIマスターに</h1>
+            <p>中小企業の現場で"すぐに使える"生成AI活用力を身につける<br>オンライン型ChatGPT研修</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScHciTBdgxFql4GEKXICiQIJuxQ181TA2zo7Z2IRqMXUFeFYA/viewform?usp=header" target="_blank" class="cta-button">問い合わせる</a>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section id="problems" class="section problems">
+        <div class="container">
+            <h2 class="section-title alt">こんなお悩みありませんか？</h2>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg width="24" height="24" fill="#004B8D" viewBox="0 0 24 24">
+                            <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 4V6C15 7.1 14.1 8 13 8H11C9.9 8 9 7.1 9 6V4L3 7V9H21ZM3 10V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V10H3Z"/>
+                        </svg>
+                    </div>
+                    <h3>採用活動</h3>
+                    <p>「また求人票を一から作り直し...」<br>スカウトメール、面接フィードバック、採用通知文。毎回ゼロから考えるのはもう限界。</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg width="24" height="24" fill="#004B8D" viewBox="0 0 24 24">
+                            <path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M7.5,18A1.5,1.5 0 0,0 9,16.5A1.5,1.5 0 0,0 7.5,15A1.5,1.5 0 0,0 6,16.5A1.5,1.5 0 0,0 7.5,18M8,5V9H16V5H8Z"/>
+                        </svg>
+                    </div>
+                    <h3>SNS・広報</h3>
+                    <p>「今日も投稿ネタが思い浮かばない...」<br>継続的な発信が必要なのに、文章を考える時間がない。気づけば3週間も更新していない。</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg width="24" height="24" fill="#004B8D" viewBox="0 0 24 24">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                    </div>
+                    <h3>提案書・調査</h3>
+                    <p>「また徹夜で資料作成...」<br>顧客提案書、企画書、競合分析。資料作りに追われて肝心の営業時間が確保できない。</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg width="24" height="24" fill="#004B8D" viewBox="0 0 24 24">
+                            <path d="M19,3H5C3.9,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3M5,19V5H19V19H5M17,17H7V15H17V17M17,13H7V11H17V13M17,9H7V7H17V9Z"/>
+                        </svg>
+                    </div>
+                    <h3>マニュアル整備</h3>
+                    <p>「新人に教える時間がない...」<br>業務手順書の更新、研修資料の作成。いつも後回しで属人化が進む一方。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="section-title">研修の特徴</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="30" height="30" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>初心者向け</h3>
+                    <p>AIの種類・ChatGPT登録等から丁寧に解説</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="30" height="30" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3>実践重視</h3>
+                    <p>受講者が手を動かしながら学ぶ講座</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="30" height="30" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        </svg>
+                    </div>
+                    <h3>短時間学習</h3>
+                    <p>5-15分の単位で忙しい現場でも継続可能</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section id="curriculum" class="section" style="background-color: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title alt">カリキュラム概要</h2>
+            <div class="curriculum-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>基礎理解</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">生成AIの基本概念と企業での活用可能性を学習</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>プロンプト実践</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">すぐに使える10個のテクニック</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>業務シナリオ演習</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">実際の日常業務18選の演習</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" class="section">
+        <div class="container">
+            <h2 class="section-title">研修内容をご紹介</h2>
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/9bVHu-Dlm_0?si=WSqW4NBn2wEyErf9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="section results">
+        <div class="container">
+            <h2 class="section-title">成果事例</h2>
+            <div class="results-slider">
+                <div class="result-card">
+                    <h3>製造業 管理部長様</h3>
+                    <p>資料作成時間50%短縮を実現。月次報告書の作成が従来の半分の時間で完了するようになりました。</p>
+                </div>
+
+                <div class="result-card">
+                    <h3>リフォーム会社 営業部長様</h3>
+                    <p>"AIが難しいと思っていたが、実際に使ってみると驚くほど簡単で効果的だった。特にメール作成や顧客データの整理で大幅な時間短縮ができ、その分お客様対応に集中できるようになりました。"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section">
+        <div class="container">
+            <h2 class="section-title">プラン&価格</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>オンライン生成AI研修</h3>
+                    <p class="price regular">¥200,000</p>
+                    <p>1名あたり（税抜）</p>
+                </div>
+                <div class="pricing-card">
+                    <h3>助成金活用価格</h3>
+                    <p class="price">¥50,000</p>
+                    <p>1名あたり（税抜）</p>
+                    <div class="discount-badge">最大75%活用可能！</div>
+                </div>
+            </div>
+            <div class="pricing-cta">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScHciTBdgxFql4GEKXICiQIJuxQ181TA2zo7Z2IRqMXUFeFYA/viewform?usp=header" target="_blank" class="cta-button">お申し込み・お問い合わせ</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Benefits Section -->
+    <section id="benefits" class="section" style="background-color: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title alt">特別特典内容</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" fill="#004B8D" viewBox="0 0 24 24">
+                            <path d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                        </svg>
+                    </div>
+                    <h3>受講期間延長</h3>
+                    <p><strong>通常2ヶ月 → 3ヶ月</strong><br>じっくり学習できる期間を確保</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" fill="#004B8D" viewBox="0 0 24 24">
+                            <path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"/>
+                        </svg>
+                    </div>
+                    <h3>コンサル付き</h3>
+                    <p><strong>ChatGPT活用業務改善コンサル1回</strong><br>個別の課題解決をサポート</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" fill="#004B8D" viewBox="0 0 24 24">
+                            <path d="M9,11H7V9H9V11M13,11H11V9H13V11M17,11H15V9H17V11M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19M19,6H5V5H19V6Z"/>
+                        </svg>
+                    </div>
+                    <h3>助成金サポート</h3>
+                    <p><strong>協力会社をご紹介</strong><br>助成金申請の専門家がサポート</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section">
+        <div class="container">
+            <h2 class="section-title">よくある質問</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">ITリテラシーが低くても参加可能ですか？</button>
+                    <div class="faq-answer">初心者向け前提で設計しています。基本的なPC操作ができれば問題ありません。</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">助成金のサポートをしてもらうことは可能ですか？</button>
+                    <div class="faq-answer">可能です。提携先の会社をご紹介いたします。</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">研修後のフォローアップはありますか？</button>
+                    <div class="faq-answer">3ヶ月間のメールサポートと、社内展開用のテンプレートを提供いたします。</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">カスタマイズは可能ですか？</button>
+                    <div class="faq-answer">お客様の業界や職種に合わせたカスタマイズが可能です。詳細はお問い合わせください。（一部費用をいただく可能性はございます）</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>株式会社JIL</h3>
+                    <p>〒150-0001</p>
+                    <p>東京都渋谷区神宮前6-23-4 桑野ビル2F</p>
+                    <p>Email: info@llabo.jilinc.co.jp</p>
+                </div>
+
+            </div>
+            <div class="footer-cta">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScHciTBdgxFql4GEKXICiQIJuxQ181TA2zo7Z2IRqMXUFeFYA/viewform?usp=header" target="_blank" class="cta-button">まずは問い合わせる</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFAQ(button) {
+            const answer = button.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Close all FAQ answers
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked FAQ if it wasn't active
+            if (!isActive) {
+                answer.classList.add('active');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Smooth scrolling for CTA buttons
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'964b16d600c92626',t:'MTc1MzQ0MDU1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
